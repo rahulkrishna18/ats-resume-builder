@@ -2,9 +2,22 @@ import { render, screen } from '@testing-library/react';
 import ATSChecker from './ATSChecker';
 
 const emptyData = {
-  personal: { name: '', title: '', email: '', phone: '', location: '', linkedin: '', website: '', summary: '' },
-  experience: [{ id: 1, company: '', role: '', startDate: '', endDate: '', current: false, bullets: [''] }],
-  education: [{ id: 1, institution: '', degree: '', field: '', startDate: '', endDate: '', gpa: '' }],
+  personal: {
+    name: '',
+    title: '',
+    email: '',
+    phone: '',
+    location: '',
+    linkedin: '',
+    website: '',
+    summary: '',
+  },
+  experience: [
+    { id: 1, company: '', role: '', startDate: '', endDate: '', current: false, bullets: [''] },
+  ],
+  education: [
+    { id: 1, institution: '', degree: '', field: '', startDate: '', endDate: '', gpa: '' },
+  ],
   projects: [{ id: 1, name: '', role: '', url: '', startDate: '', endDate: '', bullets: [''] }],
   skills: { technical: '', soft: '', languages: '', certifications: '' },
 };
@@ -18,7 +31,8 @@ const fullData = {
     location: 'San Francisco, CA',
     linkedin: 'linkedin.com/in/jane',
     website: 'janesmith.dev',
-    summary: 'Experienced software engineer with 5 years of experience building scalable web applications.',
+    summary:
+      'Experienced software engineer with 5 years of experience building scalable web applications.',
   },
   experience: [
     {
@@ -32,9 +46,27 @@ const fullData = {
     },
   ],
   education: [
-    { id: 1, institution: 'MIT', degree: 'Bachelor of Science', field: 'Computer Science', startDate: '2015', endDate: '2019', gpa: '3.9' },
+    {
+      id: 1,
+      institution: 'MIT',
+      degree: 'Bachelor of Science',
+      field: 'Computer Science',
+      startDate: '2015',
+      endDate: '2019',
+      gpa: '3.9',
+    },
   ],
-  projects: [{ id: 1, name: 'Portfolio', role: 'Developer', url: 'github.com', startDate: '2023', endDate: '2023', bullets: ['Built a portfolio site'] }],
+  projects: [
+    {
+      id: 1,
+      name: 'Portfolio',
+      role: 'Developer',
+      url: 'github.com',
+      startDate: '2023',
+      endDate: '2023',
+      bullets: ['Built a portfolio site'],
+    },
+  ],
   skills: {
     technical: 'Python, React, Node.js, AWS, Docker',
     soft: 'Leadership, Communication',

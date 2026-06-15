@@ -15,7 +15,9 @@ describe('EducationForm', () => {
     render(<EducationForm data={defaultData} onChange={() => {}} />);
     const toggle = screen.getByText('Education').closest('button');
     fireEvent.click(toggle);
-    expect(screen.getByPlaceholderText('Massachusetts Institute of Technology')).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('Massachusetts Institute of Technology')
+    ).toBeInTheDocument();
   });
 
   test('calls onChange when institution is typed', () => {

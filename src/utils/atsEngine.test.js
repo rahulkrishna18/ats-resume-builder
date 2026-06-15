@@ -34,7 +34,8 @@ describe('analyzeMatch', () => {
 
   test('perfect match returns high score', () => {
     const jd = 'Looking for a Python developer with React and AWS experience';
-    const resume = 'Python developer with React and AWS experience. Strong Python and React skills.';
+    const resume =
+      'Python developer with React and AWS experience. Strong Python and React skills.';
     const result = analyzeMatch(jd, resume);
     expect(result.score).toBeGreaterThan(50);
   });
@@ -68,11 +69,16 @@ describe('analyzeMatch', () => {
     const jd = 'Python React Node.js AWS Docker developer with leadership skills';
     const resume = 'Python and Node.js developer with some AWS experience';
     const result = analyzeMatch(jd, resume);
-    expect(result.matchedKeywords.length + result.missingKeywords.length).toBe(result.totalKeywords);
+    expect(result.matchedKeywords.length + result.missingKeywords.length).toBe(
+      result.totalKeywords
+    );
   });
 
   test('byCategory contains all four categories', () => {
-    const result = analyzeMatch('Python developer with leadership and bachelor degree', 'Python engineer');
+    const result = analyzeMatch(
+      'Python developer with leadership and bachelor degree',
+      'Python engineer'
+    );
     expect(result.byCategory).toHaveProperty('hardSkills');
     expect(result.byCategory).toHaveProperty('softSkills');
     expect(result.byCategory).toHaveProperty('experience');

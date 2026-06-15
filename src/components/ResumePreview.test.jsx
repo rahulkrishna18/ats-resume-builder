@@ -3,9 +3,22 @@ import ResumePreview from './ResumePreview';
 import { createRef } from 'react';
 
 const emptyData = {
-  personal: { name: '', title: '', email: '', phone: '', location: '', linkedin: '', website: '', summary: '' },
-  experience: [{ id: 1, company: '', role: '', startDate: '', endDate: '', current: false, bullets: [''] }],
-  education: [{ id: 1, institution: '', degree: '', field: '', startDate: '', endDate: '', gpa: '' }],
+  personal: {
+    name: '',
+    title: '',
+    email: '',
+    phone: '',
+    location: '',
+    linkedin: '',
+    website: '',
+    summary: '',
+  },
+  experience: [
+    { id: 1, company: '', role: '', startDate: '', endDate: '', current: false, bullets: [''] },
+  ],
+  education: [
+    { id: 1, institution: '', degree: '', field: '', startDate: '', endDate: '', gpa: '' },
+  ],
   projects: [{ id: 1, name: '', role: '', url: '', startDate: '', endDate: '', bullets: [''] }],
   skills: { technical: '', soft: '', languages: '', certifications: '' },
 };
@@ -23,16 +36,36 @@ const fullData = {
   },
   experience: [
     {
-      id: 1, company: 'Acme Corp', role: 'Senior Engineer',
-      startDate: 'Jan 2022', endDate: '', current: true,
+      id: 1,
+      company: 'Acme Corp',
+      role: 'Senior Engineer',
+      startDate: 'Jan 2022',
+      endDate: '',
+      current: true,
       bullets: ['Led migration to microservices reducing latency by 40%'],
     },
   ],
   education: [
-    { id: 1, institution: 'MIT', degree: 'Bachelor of Science', field: 'Computer Science', startDate: '2015', endDate: '2019', gpa: '3.9' },
+    {
+      id: 1,
+      institution: 'MIT',
+      degree: 'Bachelor of Science',
+      field: 'Computer Science',
+      startDate: '2015',
+      endDate: '2019',
+      gpa: '3.9',
+    },
   ],
   projects: [
-    { id: 1, name: 'ATS Builder', role: 'Lead Developer', url: 'github.com/user/ats', startDate: 'Jan 2024', endDate: 'Mar 2024', bullets: ['Built ATS resume builder with React'] },
+    {
+      id: 1,
+      name: 'ATS Builder',
+      role: 'Lead Developer',
+      url: 'github.com/user/ats',
+      startDate: 'Jan 2024',
+      endDate: 'Mar 2024',
+      bullets: ['Built ATS resume builder with React'],
+    },
   ],
   skills: {
     technical: 'Python, React, Node.js, AWS',

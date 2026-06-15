@@ -2,8 +2,14 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import PersonalForm from './PersonalForm';
 
 const defaultData = {
-  name: '', title: '', email: '', phone: '',
-  location: '', linkedin: '', website: '', summary: '',
+  name: '',
+  title: '',
+  email: '',
+  phone: '',
+  location: '',
+  linkedin: '',
+  website: '',
+  summary: '',
 };
 
 describe('PersonalForm', () => {
@@ -35,7 +41,9 @@ describe('PersonalForm', () => {
     fireEvent.change(screen.getByPlaceholderText('jane@company.com'), {
       target: { value: 'john@example.com' },
     });
-    expect(handleChange).toHaveBeenCalledWith(expect.objectContaining({ email: 'john@example.com' }));
+    expect(handleChange).toHaveBeenCalledWith(
+      expect.objectContaining({ email: 'john@example.com' })
+    );
   });
 
   test('displays existing values in inputs', () => {
