@@ -55,7 +55,7 @@ describe('PersonalForm', () => {
 
   test('section collapses and expands on click', () => {
     render(<PersonalForm data={defaultData} onChange={() => {}} />);
-    const toggle = screen.getByText('Personal Info').closest('button');
+    const toggle = screen.getByRole('button', { name: /Personal Info/i });
     fireEvent.click(toggle);
     expect(screen.queryByPlaceholderText('Jane Smith')).not.toBeInTheDocument();
     fireEvent.click(toggle);

@@ -13,7 +13,7 @@ describe('ProjectsForm', () => {
 
   test('renders project fields after expanding', () => {
     render(<ProjectsForm data={defaultData} onChange={() => {}} />);
-    const toggle = screen.getByText('Projects').closest('button');
+    const toggle = screen.getByRole('button', { name: /Projects/i });
     fireEvent.click(toggle);
     expect(screen.getByPlaceholderText('E-commerce Platform')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Lead Developer')).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe('ProjectsForm', () => {
   test('calls onChange when project name is typed', () => {
     const handleChange = jest.fn();
     render(<ProjectsForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Projects').closest('button');
+    const toggle = screen.getByRole('button', { name: /Projects/i });
     fireEvent.click(toggle);
     fireEvent.change(screen.getByPlaceholderText('E-commerce Platform'), {
       target: { value: 'ATS Resume Builder' },
@@ -35,7 +35,7 @@ describe('ProjectsForm', () => {
   test('calls onChange when role is typed', () => {
     const handleChange = jest.fn();
     render(<ProjectsForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Projects').closest('button');
+    const toggle = screen.getByRole('button', { name: /Projects/i });
     fireEvent.click(toggle);
     fireEvent.change(screen.getByPlaceholderText('Lead Developer'), {
       target: { value: 'Full Stack Developer' },
@@ -48,7 +48,7 @@ describe('ProjectsForm', () => {
   test('Add Project button adds a new entry', () => {
     const handleChange = jest.fn();
     render(<ProjectsForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Projects').closest('button');
+    const toggle = screen.getByRole('button', { name: /Projects/i });
     fireEvent.click(toggle);
     fireEvent.click(screen.getByText('Add Project'));
     expect(handleChange).toHaveBeenCalledWith(
@@ -59,7 +59,7 @@ describe('ProjectsForm', () => {
   test('Add bullet adds a new bullet point', () => {
     const handleChange = jest.fn();
     render(<ProjectsForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Projects').closest('button');
+    const toggle = screen.getByRole('button', { name: /Projects/i });
     fireEvent.click(toggle);
     fireEvent.click(screen.getByText('Add bullet'));
     expect(handleChange).toHaveBeenCalledWith(
@@ -71,7 +71,7 @@ describe('ProjectsForm', () => {
 
   test('renders URL field', () => {
     render(<ProjectsForm data={defaultData} onChange={() => {}} />);
-    const toggle = screen.getByText('Projects').closest('button');
+    const toggle = screen.getByRole('button', { name: /Projects/i });
     fireEvent.click(toggle);
     expect(screen.getByPlaceholderText('github.com/user/project')).toBeInTheDocument();
   });
@@ -79,7 +79,7 @@ describe('ProjectsForm', () => {
   test('displays existing project name value', () => {
     const data = [{ ...defaultData[0], name: 'My Portfolio' }];
     render(<ProjectsForm data={data} onChange={() => {}} />);
-    const toggle = screen.getByText('Projects').closest('button');
+    const toggle = screen.getByRole('button', { name: /Projects/i });
     fireEvent.click(toggle);
     expect(screen.getByDisplayValue('My Portfolio')).toBeInTheDocument();
   });

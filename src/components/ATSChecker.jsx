@@ -140,7 +140,9 @@ export default function ATSChecker({ data }) {
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className={`text-xl font-bold ${colors.ring}`}>{score}</span>
+              <span data-testid="ats-score" className={`text-xl font-bold ${colors.ring}`}>
+                {score}
+              </span>
               <span className="text-xs text-slate-400 -mt-0.5">/ 100</span>
             </div>
           </div>

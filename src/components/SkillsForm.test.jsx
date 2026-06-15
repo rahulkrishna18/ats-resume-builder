@@ -16,7 +16,7 @@ describe('SkillsForm', () => {
 
   test('renders all skill fields after expanding', () => {
     render(<SkillsForm data={defaultData} onChange={() => {}} />);
-    const toggle = screen.getByText('Skills').closest('button');
+    const toggle = screen.getByRole('button', { name: /Skills/i });
     fireEvent.click(toggle);
     expect(screen.getByPlaceholderText(/Python, React, Node.js/)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Team Leadership/)).toBeInTheDocument();
@@ -25,7 +25,7 @@ describe('SkillsForm', () => {
   test('calls onChange when technical skills are typed', () => {
     const handleChange = jest.fn();
     render(<SkillsForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Skills').closest('button');
+    const toggle = screen.getByRole('button', { name: /Skills/i });
     fireEvent.click(toggle);
     fireEvent.change(screen.getByPlaceholderText(/Python, React, Node.js/), {
       target: { value: 'Python, React, AWS' },
@@ -38,7 +38,7 @@ describe('SkillsForm', () => {
   test('calls onChange when soft skills are typed', () => {
     const handleChange = jest.fn();
     render(<SkillsForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Skills').closest('button');
+    const toggle = screen.getByRole('button', { name: /Skills/i });
     fireEvent.click(toggle);
     fireEvent.change(screen.getByPlaceholderText(/Team Leadership/), {
       target: { value: 'Leadership, Teamwork' },
@@ -51,7 +51,7 @@ describe('SkillsForm', () => {
   test('calls onChange when certifications are typed', () => {
     const handleChange = jest.fn();
     render(<SkillsForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Skills').closest('button');
+    const toggle = screen.getByRole('button', { name: /Skills/i });
     fireEvent.click(toggle);
     fireEvent.change(screen.getByPlaceholderText(/AWS Solutions Architect/), {
       target: { value: 'AWS Solutions Architect' },
@@ -64,7 +64,7 @@ describe('SkillsForm', () => {
   test('displays existing technical skills value', () => {
     const data = { ...defaultData, technical: 'Python, React' };
     render(<SkillsForm data={data} onChange={() => {}} />);
-    const toggle = screen.getByText('Skills').closest('button');
+    const toggle = screen.getByRole('button', { name: /Skills/i });
     fireEvent.click(toggle);
     expect(screen.getByDisplayValue('Python, React')).toBeInTheDocument();
   });

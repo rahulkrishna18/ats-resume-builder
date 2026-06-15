@@ -88,16 +88,14 @@ describe('ATSChecker', () => {
 
   test('shows low score for empty data', () => {
     render(<ATSChecker data={emptyData} />);
-    const scoreEl = screen.getByText('/ 100');
-    const scoreValue = scoreEl.previousSibling?.textContent;
-    expect(Number(scoreValue)).toBeLessThan(50);
+    const score = Number(screen.getByTestId('ats-score').textContent);
+    expect(score).toBeLessThan(50);
   });
 
   test('shows high score for complete data', () => {
     render(<ATSChecker data={fullData} />);
-    const scoreEl = screen.getByText('/ 100');
-    const scoreValue = scoreEl.previousSibling?.textContent;
-    expect(Number(scoreValue)).toBeGreaterThanOrEqual(70);
+    const score = Number(screen.getByTestId('ats-score').textContent);
+    expect(score).toBeGreaterThanOrEqual(70);
   });
 
   test('renders checklist items', () => {

@@ -11,9 +11,9 @@ describe('ExperienceForm', () => {
     expect(screen.getByText('Work Experience')).toBeInTheDocument();
   });
 
-  test('renders position fields', () => {
+  test('renders position fields after expanding', () => {
     render(<ExperienceForm data={defaultData} onChange={() => {}} />);
-    const toggle = screen.getByText('Work Experience').closest('button');
+    const toggle = screen.getByRole('button', { name: /Work Experience/i });
     fireEvent.click(toggle);
     fireEvent.click(toggle);
     expect(screen.getByPlaceholderText('Acme Corporation')).toBeInTheDocument();
@@ -23,7 +23,7 @@ describe('ExperienceForm', () => {
   test('calls onChange when company is typed', () => {
     const handleChange = jest.fn();
     render(<ExperienceForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Work Experience').closest('button');
+    const toggle = screen.getByRole('button', { name: /Work Experience/i });
     fireEvent.click(toggle);
     fireEvent.click(toggle);
     fireEvent.change(screen.getByPlaceholderText('Acme Corporation'), {
@@ -35,7 +35,7 @@ describe('ExperienceForm', () => {
   test('Add Position button adds a new entry', () => {
     const handleChange = jest.fn();
     render(<ExperienceForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Work Experience').closest('button');
+    const toggle = screen.getByRole('button', { name: /Work Experience/i });
     fireEvent.click(toggle);
     fireEvent.click(toggle);
     fireEvent.click(screen.getByText('Add Position'));
@@ -47,7 +47,7 @@ describe('ExperienceForm', () => {
   test('current role checkbox toggles correctly', () => {
     const handleChange = jest.fn();
     render(<ExperienceForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Work Experience').closest('button');
+    const toggle = screen.getByRole('button', { name: /Work Experience/i });
     fireEvent.click(toggle);
     fireEvent.click(toggle);
     const checkbox = screen.getByRole('checkbox');
@@ -60,7 +60,7 @@ describe('ExperienceForm', () => {
   test('Add bullet adds a new bullet point', () => {
     const handleChange = jest.fn();
     render(<ExperienceForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Work Experience').closest('button');
+    const toggle = screen.getByRole('button', { name: /Work Experience/i });
     fireEvent.click(toggle);
     fireEvent.click(toggle);
     fireEvent.click(screen.getByText('Add bullet'));

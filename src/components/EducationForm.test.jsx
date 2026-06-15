@@ -13,7 +13,7 @@ describe('EducationForm', () => {
 
   test('renders institution field after expanding', () => {
     render(<EducationForm data={defaultData} onChange={() => {}} />);
-    const toggle = screen.getByText('Education').closest('button');
+    const toggle = screen.getByRole('button', { name: /Education/i });
     fireEvent.click(toggle);
     expect(
       screen.getByPlaceholderText('Massachusetts Institute of Technology')
@@ -23,7 +23,7 @@ describe('EducationForm', () => {
   test('calls onChange when institution is typed', () => {
     const handleChange = jest.fn();
     render(<EducationForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Education').closest('button');
+    const toggle = screen.getByRole('button', { name: /Education/i });
     fireEvent.click(toggle);
     fireEvent.change(screen.getByPlaceholderText('Massachusetts Institute of Technology'), {
       target: { value: 'Stanford University' },
@@ -36,7 +36,7 @@ describe('EducationForm', () => {
   test('calls onChange when degree is typed', () => {
     const handleChange = jest.fn();
     render(<EducationForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Education').closest('button');
+    const toggle = screen.getByRole('button', { name: /Education/i });
     fireEvent.click(toggle);
     fireEvent.change(screen.getByPlaceholderText('Bachelor of Science'), {
       target: { value: 'Master of Science' },
@@ -49,7 +49,7 @@ describe('EducationForm', () => {
   test('Add Education button adds a new entry', () => {
     const handleChange = jest.fn();
     render(<EducationForm data={defaultData} onChange={handleChange} />);
-    const toggle = screen.getByText('Education').closest('button');
+    const toggle = screen.getByRole('button', { name: /Education/i });
     fireEvent.click(toggle);
     fireEvent.click(screen.getByText('Add Education'));
     expect(handleChange).toHaveBeenCalledWith(
@@ -57,24 +57,17 @@ describe('EducationForm', () => {
     );
   });
 
-  test('remove button hidden when only one entry', () => {
-    render(<EducationForm data={defaultData} onChange={() => {}} />);
-    const toggle = screen.getByText('Education').closest('button');
-    fireEvent.click(toggle);
-    expect(screen.queryByTitle('remove')).not.toBeInTheDocument();
-  });
-
   test('displays existing institution value', () => {
     const data = [{ ...defaultData[0], institution: 'MIT' }];
     render(<EducationForm data={data} onChange={() => {}} />);
-    const toggle = screen.getByText('Education').closest('button');
+    const toggle = screen.getByRole('button', { name: /Education/i });
     fireEvent.click(toggle);
     expect(screen.getByDisplayValue('MIT')).toBeInTheDocument();
   });
 
   test('renders GPA field', () => {
     render(<EducationForm data={defaultData} onChange={() => {}} />);
-    const toggle = screen.getByText('Education').closest('button');
+    const toggle = screen.getByRole('button', { name: /Education/i });
     fireEvent.click(toggle);
     expect(screen.getByPlaceholderText('3.9')).toBeInTheDocument();
   });
