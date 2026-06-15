@@ -1,3 +1,15 @@
+# ──────────────────────────────────────────────────────────────────────────────
+#  ATS Resume Builder — CI/CD Pipeline
+#
+#  Every push to main runs through 4 automated stages:
+#
+#  [1] Code Quality  →  [2] Tests & Coverage  →  [3] Build  →  [4] Deploy
+#
+#  Jobs 1 and 2 run in PARALLEL to save time.
+#  Jobs 3 and 4 only run if BOTH quality and tests pass.
+#  Deploy only runs on pushes to main (not on pull requests).
+# ──────────────────────────────────────────────────────────────────────────────
+
 name: CI / CD Pipeline
 
 on:
@@ -7,16 +19,21 @@ on:
     branches: [main, develop]
 
 jobs:
-  # ── Job 1: Code Quality ────────────────────────────────────────────────────
-  quality:
-    name: Code Quality
+  # ────────────────────────────────────────────────────────────────────────────
+  # STAGE 1 — Code Quality
+  # Checks code formatting (Prettier) and code standards (ESLint).
+  # Fails fast if any style or lint rule is violated.
+  # Runs in PARALLEL with Stage 2.
+  # ────────────────────────────────────────────────────────────────────────────
+  code-quality:
+    name: 'Stage 1 — Code Quality'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js v20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -25,22 +42,28 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Run Prettier check
+      - name: Check code formatting (Prettier)
         run: npm run format:check
 
-      - name: Run ESLint
+      - name: Check code standards (ESLint)
         run: npm run lint
 
-  # ── Job 2: Tests ───────────────────────────────────────────────────────────
-  test:
-    name: Test Suite
+  # ────────────────────────────────────────────────────────────────────────────
+  # STAGE 2 — Tests & Coverage
+  # Runs 65 unit + component tests using React Testing Library and Jest.
+  # Enforces a minimum 70% code coverage threshold.
+  # Uploads the coverage report as a downloadable artifact.
+  # Runs in PARALLEL with Stage 1.
+  # ────────────────────────────────────────────────────────────────────────────
+  tests-and-coverage:
+    name: 'Stage 2 — Tests & Coverage'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js v20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -49,12 +72,12 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Run tests with coverage
+      - name: Run tests with coverage report
         run: npm run test:coverage
         env:
           CI: true
 
-      - name: Upload coverage report
+      - name: Upload coverage report (artifact)
         uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -62,17 +85,22 @@ jobs:
           path: coverage/
           retention-days: 7
 
-  # ── Job 3: Build ───────────────────────────────────────────────────────────
+  # ────────────────────────────────────────────────────────────────────────────
+  # STAGE 3 — Production Build
+  # Only runs if Stage 1 AND Stage 2 both pass.
+  # Compiles and bundles the React app for production.
+  # Uploads the build folder as an artifact for the deploy stage.
+  # ────────────────────────────────────────────────────────────────────────────
   build:
-    name: Build Verification
+    name: 'Stage 3 — Production Build'
     runs-on: ubuntu-latest
-    needs: [quality, test]
+    needs: [code-quality, tests-and-coverage]
 
     steps:
-      - name: Checkout code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js v20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -93,18 +121,23 @@ jobs:
           path: build/
           retention-days: 1
 
-  # ── Job 4: Deploy to Vercel ────────────────────────────────────────────────
+  # ────────────────────────────────────────────────────────────────────────────
+  # STAGE 4 — Deploy to Vercel
+  # Only runs on pushes to main (not on pull requests).
+  # Only runs if Stage 3 (build) passes.
+  # Deploys the app live to Vercel production.
+  # ────────────────────────────────────────────────────────────────────────────
   deploy:
-    name: Deploy to Vercel
+    name: 'Stage 4 — Deploy to Vercel'
     runs-on: ubuntu-latest
     needs: [build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
-      - name: Checkout code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js v20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -113,11 +146,11 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Pull Vercel environment
+      - name: Link project to Vercel
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Build for Vercel
+      - name: Build on Vercel infrastructure
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Deploy to Vercel production
+      - name: Deploy to production
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
